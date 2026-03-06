@@ -4,7 +4,6 @@ import Components from 'unplugin-vue-components/vite';
 import NutUIResolver from '@nutui/auto-import-resolver'
 import AutoImport from 'unplugin-auto-import/vite';
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
       vue(),
@@ -13,8 +12,11 @@ export default defineConfig({
           dts: 'src/auto-imports.d.ts'
       }),
       Components({
-          resolvers: [NutUIResolver()],
-          dts: 'src/components.d.ts'
+          resolvers: [
+              NutUIResolver({
+                  importStyle: false, // 关闭自动导入样式
+              }),
+          ],
       })
   ],
     server: {

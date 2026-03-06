@@ -9,6 +9,7 @@ app.use(createPinia());
 app.use(router);
 app.mount('#app');
 
+
 function setRem() {
     const width = document.documentElement.clientWidth;
     document.documentElement.style.fontSize = (width / 10) + 'px';
