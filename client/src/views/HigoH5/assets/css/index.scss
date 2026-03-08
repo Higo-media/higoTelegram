@@ -1,0 +1,54 @@
+.container{
+    width: 100%;
+    height: 100%;
+    background: url("../images/bg.png") no-repeat top/contain;
+    .logo{
+        margin: 10px 0 0 14px;
+        width: 80px;
+    }
+    .title{
+        margin: 30px 0 0;
+        font-size: 40px;
+        text-align: center;
+        font-family: turntable, serif;
+        //text-shadow: rgba(0, 0, 0, 0.1) 0px 4px 0px;
+        font-style: italic;
+        text-transform: uppercase; /* 建议全大写，更具力量感，配合图片风格 */
+        letter-spacing: 0.05em; /* 适当增加字间距，防止描边后字体粘连 */
+        /* 1. 提取 Logo 的高饱和鲜黄渐变 */
+        background: linear-gradient(to bottom,
+                #FFF200 0%,    /* 顶部：Logo 同款鲜黄 */
+                #FFD700 40%,   /* 中部：标准金 */
+                #FDB913 100%   /* 底部：略深的橙黄，增加厚度感 */
+        );
+        -webkit-background-clip: text;
+        color: transparent;
+
+        /* 2. 模拟 Logo 的黑色硬描边 (这是 Logo 显眼的核心) */
+        /* 建议描边宽度稍微加粗到 3px，以匹配 Logo 的力量感 */
+        -webkit-text-stroke: 2px #FDB913;
+
+        /* 3. 添加一个向下的投影，模拟 Logo 的立体层叠效果 */
+        filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.2));
+    }
+    .turntable-body{
+        margin: 80px auto 30px;
+        width: 8.5rem;
+        height: 8.5rem;
+        background: url("../images/bg-disk.png") no-repeat top/contain;
+        position: relative;
+        .pointer-text{
+            position: absolute;
+            left: 50%;
+            top: 51%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            color: #fff;
+            pointer-events: none;
+        }
+        :deep(.nutbig-turntable .drawTable-img){
+            top: 1.1rem;
+        }
+    }
+
+}

@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'turntable'; /* 你给字体起的名字 */
+    src: url('./assets/fonts/turntable.ttf') format('truetype');
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+#app{
+    width: 100%;
+    height: 100%;
+}

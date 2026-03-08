@@ -1,37 +1,42 @@
 <template>
-
-    <div class="turntable-body">
-        <TurnTable
-            class="turntable"
-            ref="turntable"
-            :width="luckWidth"
-            :height="luckheight"
-            :prize-list="prizeList"
-            :turns-number="turnsNumber"
-            :turns-time="turnsTime"
-            :prize-index="prizeIndex"
-            :style-opt="styleOpt"
-            :pointer-style="pointerStyle"
-            @start-turns="startTurns"
-            @end-turns="endTurns"
-        >
-        </TurnTable>
+    <div class="container">
+        <img src="./assets/images/logo1.png" alt="" class="logo">
+        <div class="title">Higo Game Club</div>
+        <div class="turntable-body">
+            <TurnTable
+                class="turntable"
+                ref="turntable"
+                :width="luckWidth"
+                :height="luckheight"
+                :prize-list="prizeList"
+                :turns-number="turnsNumber"
+                :turns-time="turnsTime"
+                :prize-index="prizeIndex"
+                :style-opt="styleOpt"
+                :pointer-style="pointerStyle"
+                @start-turns="startTurns"
+                @end-turns="endTurns"
+            >
+            </TurnTable>
+            <div class="pointer-text">抽奖</div>
+        </div>
     </div>
+
 
 </template>
 <script setup lang="ts">
+import {onMounted} from "vue";
 import { TurnTable } from "@nutui/nutui-bingo";
 import "@nutui/nutui-bingo/dist/style.css";
 import { ref, reactive } from "vue";
 // 转盘大小
-const luckWidth = ref("300px");
-const luckheight = ref("300px");
+const luckWidth = ref("78%");
+const luckheight = ref("78%");
 // 转盘指针图片样式
 const pointerStyle = {
-    width: "80px",
-    height: "80px",
-    backgroundImage:
-        'url("https://img11.360buyimg.com/imagetools/jfs/t1/89512/11/15244/137408/5e6f15edEf57fa3ff/cb57747119b3bf89.png")',
+    width: "2rem",
+    height: "2rem",
+    backgroundImage: `url("${new URL("./assets/images/pointer.png", import.meta.url).href}")`,
     backgroundSize: "contain",
     backgroundRepeat: "no-repeat",
 };
@@ -40,40 +45,34 @@ const prizeList = ref([
     {
         id: "xiaomi",
         prizeName: "小米手机",
-        prizeImg:
-            "https://img14.360buyimg.com/imagetools/jfs/t1/104165/34/15186/96522/5e6f1435E46bc0cb0/d4e878a15bfd9362.png",
+        prizeImg: new URL("./assets/images/prize1.png", import.meta.url).href
     },
     {
         id: "blue",
         prizeColor: "rgb(251, 219, 216)",
         prizeName: "蓝牙耳机",
-        prizeImg:
-            "https://img13.360buyimg.com/imagetools/jfs/t1/91864/11/15108/139003/5e6f146dE1c7b511d/1ddc5aa6e502060a.jpg",
+        prizeImg: new URL("./assets/images/prize2.png", import.meta.url).href
     },
     {
         id: "apple",
         prizeName: "apple watch",
-        prizeImg:
-            "https://img11.360buyimg.com/imagetools/jfs/t1/105385/19/15140/111093/5e6f1506E48bd0dfb/829a98a8cdb4c27f.png",
+        prizeImg: new URL("./assets/images/prize3.png", import.meta.url).href
     },
     {
         id: "fruit",
         prizeColor: "rgba(246, 142, 46, 0.5)",
         prizeName: "迪士尼苹果",
-        prizeImg:
-            "https://img11.360buyimg.com/imagetools/jfs/t1/108308/11/8890/237603/5e6f157eE489cccf1/26e0437cfd93b9c8.png",
+        prizeImg: new URL("./assets/images/prize4.png", import.meta.url).href
     },
     {
         id: "fish",
         prizeName: "海鲜套餐",
-        prizeImg:
-            "https://img14.360buyimg.com/imagetools/jfs/t1/90507/38/15165/448364/5e6f15b4E5df0c718/4bd4c3d375eec312.png",
+        prizeImg: new URL("./assets/images/prize5.png", import.meta.url).href
     },
     {
         id: "thanks",
         prizeName: "谢谢参与",
-        prizeImg:
-            "https://img11.360buyimg.com/imagetools/jfs/t1/96116/38/15085/5181/5e6f15d1E48e31d30/71353b61dff705d4.png",
+        prizeImg: new URL("./assets/images/prize6.png", import.meta.url).href
     },
 ]);
 // 转动圈数
@@ -105,7 +104,12 @@ const startTurns = () => {
 const endTurns = () => {
     console.log("中奖了");
 };
+
+onMounted(() => {
+    console.log('(window as any).Telegram.WebApp:',(window as any).Telegram?.WebApp);
+})
+
 </script>
 <style scoped lang="scss">
-@use "./assets/css/TurnTableCom.scss";
+@use "./assets/css/index.scss";
 </style>
