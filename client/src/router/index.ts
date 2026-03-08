@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
-    {
+    /*{
         path: '/',
         redirect: 'turntable'
-    },
+    },*/
     {
         path: '/turntable',
         name: 'Home',
