@@ -2,7 +2,7 @@
   "scripts": {
     "build": "npm run build:client && npm run build:api",
     "build:client": "cd client && npm install && npm run build",
-    "build:api": "cd api && npm install && tsc"
+    "build:api": "cd api && npm install && npx tsc"
   },
   "devDependencies": {
     "typescript": "^5.9.3"
