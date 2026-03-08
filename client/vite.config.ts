@@ -26,6 +26,9 @@ export default defineConfig({
             '@': path.resolve(__dirname, './src')
         }
     },
+    build: {
+        outDir: 'dist', // 确保这里是 dist
+    },
     server: {
         port: 5173,
         // 方便开发时通过代理测试 API，后期上线靠 Vercel Rewrite
