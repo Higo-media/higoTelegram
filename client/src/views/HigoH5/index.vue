@@ -110,7 +110,7 @@ const endTurns = () => {
 };
 
 onMounted(() => {
-    console.log('Telegram.WebApp.initData:',(window as any).Telegram?.WebApp.initData);
+    // console.log('Telegram.WebApp.initData:',(window as any).Telegram?.WebApp.initData);
     axios.get('/api/user-data').then(res => {
         console.log('res:',res);
     })
