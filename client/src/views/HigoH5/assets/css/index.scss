@@ -1,38 +1,41 @@
 .container{
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    height: calc(2000 / 923 * 100vw);
     background: url("../images/bg.png") no-repeat top/contain;
     .logo{
         margin: 10px 0 0 14px;
         width: 80px;
     }
     .title{
-        margin: 30px 0 0;
+        margin: 20px 0 0;
         font-size: 40px;
         text-align: center;
-        font-family: turntable, serif;
-        //text-shadow: rgba(0, 0, 0, 0.1) 0px 4px 0px;
-        font-style: italic;
-        text-transform: uppercase; /* 建议全大写，更具力量感，配合图片风格 */
-        letter-spacing: 0.05em; /* 适当增加字间距，防止描边后字体粘连 */
-        /* 1. 提取 Logo 的高饱和鲜黄渐变 */
-        background: linear-gradient(to bottom,
-                #FFF200 0%,    /* 顶部：Logo 同款鲜黄 */
-                #FFD700 40%,   /* 中部：标准金 */
-                #FDB913 100%   /* 底部：略深的橙黄，增加厚度感 */
-        );
-        -webkit-background-clip: text;
-        color: transparent;
+        p{
+            font-family: turntable, serif;
+            //text-shadow: rgba(0, 0, 0, 0.1) 0px 4px 0px;
+            font-style: italic;
+            text-transform: uppercase; /* 建议全大写，更具力量感，配合图片风格 */
+            letter-spacing: 0.05em; /* 适当增加字间距，防止描边后字体粘连 */
+            /* 1. 提取 Logo 的高饱和鲜黄渐变 */
+            background: linear-gradient(to bottom,
+                    #FFF200 0%,    /* 顶部：Logo 同款鲜黄 */
+                    #FFD700 40%,   /* 中部：标准金 */
+                    #FDB913 100%   /* 底部：略深的橙黄，增加厚度感 */
+            );
+            -webkit-background-clip: text;
+            color: transparent;
 
-        /* 2. 模拟 Logo 的黑色硬描边 (这是 Logo 显眼的核心) */
-        /* 建议描边宽度稍微加粗到 3px，以匹配 Logo 的力量感 */
-        -webkit-text-stroke: 2px #FDB913;
+            /* 2. 模拟 Logo 的黑色硬描边 (这是 Logo 显眼的核心) */
+            /* 建议描边宽度稍微加粗到 3px，以匹配 Logo 的力量感 */
+            -webkit-text-stroke: 2px #FDB913;
 
-        /* 3. 添加一个向下的投影，模拟 Logo 的立体层叠效果 */
-        filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.2));
+            /* 3. 添加一个向下的投影，模拟 Logo 的立体层叠效果 */
+            filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.2));
+        }
     }
     .turntable-body{
-        margin: 80px auto 30px;
+        margin: 50px auto 30px;
         width: 8.5rem;
         height: 8.5rem;
         background: url("../images/bg-disk.png") no-repeat top/contain;
@@ -51,4 +54,28 @@
         }
     }
 
+}
+
+/* 当视口的宽高比大于 16/9 时应用样式 （宽屏）*/
+@media (min-aspect-ratio: 400/640) {
+    .container {
+        .title{
+            margin: 10px 0 0;
+        }
+        .turntable-body{
+            margin: 30px auto 30px;
+        }
+    }
+}
+
+/* 当视口的宽高比小于 4/3 时应用样式 （窄屏）*/
+@media (max-aspect-ratio: 4/3) {
+    .container {
+    }
+}
+
+/* 当视口的宽高比正好在某个范围时 */
+@media (min-aspect-ratio: 16/9) and (max-aspect-ratio: 21/9) {
+    .container {
+    }
 }

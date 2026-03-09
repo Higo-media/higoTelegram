@@ -1,7 +1,10 @@
 <template>
     <div class="container">
         <img src="./assets/images/logo1.png" alt="" class="logo">
-        <div class="title">Higo Game Club</div>
+        <div class="title">
+            <p>Higo</p>
+            <p>Game Club</p>
+        </div>
         <div class="turntable-body">
             <TurnTable
                 class="turntable"
