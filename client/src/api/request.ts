@@ -20,12 +20,12 @@ request.interceptors.request.use((config) => {
             // 首次加载，保存到本地缓存
             sessionStorage.setItem('tg_init_data', initData);
             config.headers['Authorization'] = `tma ${initData}`;
-            return
-        }
-        // 页面刷新后，如果 tg.initData 为空，尝试从缓存获取
-        const cachedData = sessionStorage.getItem('tg_init_data');
-        if (cachedData) {
-            config.headers['Authorization'] = `tma ${cachedData}`;
+        } else {
+            // 页面刷新后，如果 tg.initData 为空，尝试从缓存获取
+            const cachedData = sessionStorage.getItem('tg_init_data');
+            if (cachedData) {
+                config.headers['Authorization'] = `tma ${cachedData}`;
+            }
         }
     } else {
         console.warn('未检测到 Telegram 环境，API 请求可能因无权限被拦截');
