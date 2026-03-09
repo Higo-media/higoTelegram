@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
@@ -6,7 +8,6 @@ import { validateTelegramData } from './middleware/auth'; // 确保路径正确
 const app = express();
 app.use(cors());
 app.use(express.json());
-
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
 // 示例接口
@@ -16,5 +17,9 @@ app.get('/api/user-data', validateTelegramData, async (req, res) => {
     res.json({ success: true, data });
 });
 
-// 关键：导出 app 供 Vercel 使用
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`本地调试服务器已启动: http://localhost:${PORT}`);
+});
+
 export default app;

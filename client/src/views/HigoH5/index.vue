@@ -32,6 +32,7 @@ import {onMounted} from "vue";
 import { TurnTable } from "@nutui/nutui-bingo";
 import "@nutui/nutui-bingo/dist/style.css";
 import { ref, reactive } from "vue";
+import axios from "@/api/request";
 // 转盘大小
 const luckWidth = ref("78%");
 const luckheight = ref("78%");
@@ -109,7 +110,10 @@ const endTurns = () => {
 };
 
 onMounted(() => {
-    console.log('(window as any).Telegram.WebApp:',(window as any).Telegram?.WebApp);
+    console.log('Telegram.WebApp.initData:',(window as any).Telegram?.WebApp.initData);
+    axios.get('/api/user-data').then(res => {
+        console.log('res:',res);
+    })
 })
 
 </script>

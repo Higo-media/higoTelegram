@@ -2,6 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 
 export const validateTelegramData = (req: Request, res: Response, next: NextFunction) => {
+    console.log('process.env.NODE_ENV:',req.headers['x-dev-bypass'] === 'true');
+    // 【新增】本地开发绕过逻辑
+    if (process.env.NODE_ENV === 'development' && req.headers['x-dev-bypass'] === 'true') {
+        console.warn('⚠️ 警告：已触发后端开发后门，跳过 Telegram 校验');
+        // 模拟一个固定的开发用户对象
+        (req as any).user = {
+            id: 7284934842,
+            first_name: 'DevUser',
+            username: 'nanachc'
+        };
+        return next();
+    }
     // 从 Header 获取 initData
     const authHeader = req.headers['authorization'];
     if (!authHeader || !authHeader.startsWith('tma ')) {
