@@ -7,6 +7,7 @@
         </div>
         <div class="turntable-body">
             <TurnTable
+                v-if="prizeList.length"
                 class="turntable"
                 ref="turntable"
                 :width="luckWidth"
@@ -33,6 +34,8 @@ import { TurnTable } from "@nutui/nutui-bingo";
 import "@nutui/nutui-bingo/dist/style.css";
 import { ref, reactive } from "vue";
 import axios from "@/api/request";
+import { showToast } from '@nutui/nutui';
+
 // 转盘大小
 const luckWidth = ref("78%");
 const luckheight = ref("78%");
@@ -45,40 +48,7 @@ const pointerStyle = {
     backgroundRepeat: "no-repeat",
 };
 // 转盘上要展示的奖品数据
-const prizeList = ref([
-    {
-        id: "xiaomi",
-        prizeName: "小米手机",
-        prizeImg: new URL("./assets/images/prize1.png", import.meta.url).href
-    },
-    {
-        id: "blue",
-        prizeColor: "rgb(251, 219, 216)",
-        prizeName: "蓝牙耳机",
-        prizeImg: new URL("./assets/images/prize2.png", import.meta.url).href
-    },
-    {
-        id: "apple",
-        prizeName: "apple watch",
-        prizeImg: new URL("./assets/images/prize3.png", import.meta.url).href
-    },
-    {
-        id: "fruit",
-        prizeColor: "rgba(246, 142, 46, 0.5)",
-        prizeName: "迪士尼苹果",
-        prizeImg: new URL("./assets/images/prize4.png", import.meta.url).href
-    },
-    {
-        id: "fish",
-        prizeName: "海鲜套餐",
-        prizeImg: new URL("./assets/images/prize5.png", import.meta.url).href
-    },
-    {
-        id: "thanks",
-        prizeName: "谢谢参与",
-        prizeImg: new URL("./assets/images/prize6.png", import.meta.url).href
-    },
-]);
+const prizeList = ref([]);
 // 转动圈数
 const turnsNumber = ref(5);
 // 转动需要持续的时间(秒)
@@ -100,21 +70,72 @@ const styleOpt = reactive({
 // 中奖的奖品的index(此数据可根据后台返回的值重新赋值)
 const prizeIndex = ref(-1);
 const turntable = ref<any>(null);
+
 const startTurns = () => {
+    computePrizeIndex()
+    return
     const index = Math.floor(Math.random() * prizeList.value.length);
     prizeIndex.value = index;
     turntable.value.rotateTurn();
 };
+
 const endTurns = () => {
-    console.log("中奖了");
+    showToast.success("中奖了");
 };
 
 onMounted(() => {
-    // console.log('Telegram.WebApp.initData:',(window as any).Telegram?.WebApp.initData);
-    axios.get('/api/user-data').then(res => {
-        console.log('res:',res);
-    })
+    getAdvList()
 })
+
+function getAdvList() {
+    if (sessionStorage.getItem('advList')) {
+        formatPrizeList(JSON.parse(sessionStorage.getItem('advList')))
+        return
+    }
+    axios.get('/adv/list').then(res => {
+        sessionStorage.setItem('advList', JSON.stringify(res))
+        formatPrizeList(res)
+    })
+}
+
+function formatPrizeList (res) {
+    console.log(res);
+    res.forEach((item,index) => {
+        prizeList.value[index] = {
+            id: item.id,
+            prizeName: item.name,
+            advLink: item.link,
+            probability: item.probability,
+            prizeImg: new URL(`./assets/images/prize${index+1}.png`, import.meta.url).href
+        }
+        if (index === 1) {
+            prizeList.value[index].prizeColor = "rgb(251, 219, 216)"
+        }
+        if (index === 3) {
+            prizeList.value[index].prizeColor = "rgba(246, 142, 46, 0.5)"
+        }
+    })
+    console.log(prizeList.value);
+}
+
+// 根据中间概率计算中奖的index
+function computePrizeIndex () {
+    let num = 0;
+    let obj = prizeList.value.reduce((prev,item,index) => {
+        let probNum = Math.round(item.probability* Math.random() * 10000)/100
+        console.log(probNum);
+        return probNum>prev.probNum? {
+            probNum,
+            index
+        }:prev
+        // prizeIndex.value = num>
+    },{
+        probNum:0,
+        index:0
+    })
+    console.log(obj);
+}
+
 
 </script>
 <style scoped lang="scss">

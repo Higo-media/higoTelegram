@@ -1,36 +1,67 @@
 import axios from 'axios';
+import { showToast } from '@nutui/nutui';
 
 const request = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL || '', // 建议通过环境变量管理
     timeout: 10000,
 });
 
-// 请求拦截器：自动带上 Telegram 的 initData
+// 请求拦截器
 request.interceptors.request.use((config) => {
     const isDev = import.meta.env.DEV;
+
+    // 1. 本地开发绕过逻辑
     if (isDev) {
         config.headers['x-dev-bypass'] = 'true';
-        // 【添加这行确认代码】
-        console.log('Header x-dev-bypass 已添加:', config.headers['x-dev-bypass']);
     }
-    console.log((window as any)?.Telegram?.WebApp);
-    const initData = (window as any)?.Telegram?.WebApp?.initData;
-    console.log('initData:',initData);
-    if (initData) {
-        if (initData.includes('user')){
-            // 首次加载，保存到本地缓存
-            sessionStorage.setItem('tg_init_data', initData);
-            config.headers['Authorization'] = `tma ${initData}`;
-        } else {
-            // 页面刷新后，如果 tg.initData 为空，尝试从缓存获取
-            const cachedData = sessionStorage.getItem('tg_init_data');
-            if (cachedData) {
-                config.headers['Authorization'] = `tma ${cachedData}`;
-            }
-        }
+
+    // 2. Telegram 认证逻辑处理
+    let initData = (window as any)?.Telegram?.WebApp?.initData;
+
+    if (initData && initData.includes('user')) {
+        sessionStorage.setItem('tg_init_data', initData);
     } else {
-        console.warn('未检测到 Telegram 环境，API 请求可能因无权限被拦截');
+        initData = sessionStorage.getItem('tg_init_data') || '';
     }
+
+    if (initData) {
+        config.headers['Authorization'] = `tma ${initData}`;
+    }
+
     return config;
-});
+}, (error) => Promise.reject(error));
+
+// 响应拦截器
+request.interceptors.response.use(
+    (response) => {
+        const res = response.data;
+
+        // 对应后端返回格式：{ success: boolean, data: any, error?: string }
+        if (res.success) {
+            return res.data; // 成功则直接抛出业务数据
+        } else {
+            // 业务级错误处理 (例如：积分不足、验证失败)
+            const errorMsg = res.error || '业务请求失败';
+            showToast.warn(errorMsg);
+            return Promise.reject(new Error(errorMsg));
+        }
+    },
+    (error) => {
+        // 网络/系统级错误处理 (例如：404, 500, 网络断开)
+        let message = '';
+        const status = error.response?.status;
+
+        switch (status) {
+            case 401: message = '身份验证过期，请重新进入小程序'; break;
+            case 403: message = '拒绝访问'; break;
+            case 404: message = '请求资源不存在'; break;
+            case 500: message = '服务器内部错误'; break;
+            default: message = error.message || '网络连接异常';
+        }
+
+        showToast.error(message);
+        return Promise.reject(error);
+    }
+);
 
 export default request;

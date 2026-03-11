@@ -34,9 +34,9 @@ export default defineConfig({
         // 方便开发时通过代理测试 API，后期上线靠 Vercel Rewrite
         proxy: {
             '/api': {
-                target: 'http://localhost:3000', // 这里是你未来的后端地址
+                target: 'http://localhost:3000', // 后端地址
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, '')
+                // rewrite: (path) => path.replace(/^\/api/, '')
             }
         }
     }
