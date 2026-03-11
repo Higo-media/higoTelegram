@@ -118,17 +118,16 @@ function formatPrizeList (res) {
     console.log(prizeList.value);
 }
 
-// 根据中间概率计算中奖的index
+// 根据中奖概率计算中奖的index
 function computePrizeIndex () {
     let num = 0;
     let obj = prizeList.value.reduce((prev,item,index) => {
-        let probNum = Math.round(item.probability* Math.random() * 10000)/100
+        let probNum = Math.round(item.probability* Math.random() * 1000)/100
         console.log(probNum);
         return probNum>prev.probNum? {
             probNum,
             index
         }:prev
-        // prizeIndex.value = num>
     },{
         probNum:0,
         index:0
