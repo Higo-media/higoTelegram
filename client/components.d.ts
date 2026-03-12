@@ -12,6 +12,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    LangSwitcher: typeof import('./src/components/LangSwitcher.vue')['default']
+    NutActionSheet: typeof import('@nutui/nutui')['ActionSheet']
+    NutButton: typeof import('@nutui/nutui')['Button']
+    NutCell: typeof import('@nutui/nutui')['Cell']
+    NutPopover: typeof import('@nutui/nutui')['Popover']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

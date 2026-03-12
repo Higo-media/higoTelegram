@@ -1,6 +1,7 @@
 <template>
     <div class="container">
         <img src="./assets/images/logo1.png" alt="" class="logo">
+        <LangSwitcher @onSelect="getAdvList"></LangSwitcher>
         <div class="title">
             <p>Higo</p>
             <p>Game Club</p>
@@ -22,7 +23,12 @@
                 @end-turns="endTurns"
             >
             </TurnTable>
-            <div class="pointer-text">抽奖</div>
+            <div class="pointer-text">GO</div>
+        </div>
+
+        <div class="main-btn" @click="startTurns">
+            {{$t('btnText.mainBtn')}}
+            <img src="./assets/images/ic-hand.png" alt="" class="pointer">
         </div>
     </div>
 
@@ -35,6 +41,7 @@ import "@nutui/nutui-bingo/dist/style.css";
 import { ref, reactive } from "vue";
 import axios from "@/api/request";
 import { showToast } from '@nutui/nutui';
+import LangSwitcher from '@/components/LangSwitcher.vue'
 
 // 转盘大小
 const luckWidth = ref("78%");
@@ -71,11 +78,9 @@ const styleOpt = reactive({
 const prizeIndex = ref(-1);
 const turntable = ref<any>(null);
 
+// 点击抽奖
 const startTurns = () => {
     computePrizeIndex()
-    return
-    const index = Math.floor(Math.random() * prizeList.value.length);
-    prizeIndex.value = index;
     turntable.value.rotateTurn();
 };
 
@@ -88,10 +93,10 @@ onMounted(() => {
 })
 
 function getAdvList() {
-    if (sessionStorage.getItem('advList')) {
+    /*if (sessionStorage.getItem('advList')) {
         formatPrizeList(JSON.parse(sessionStorage.getItem('advList')))
         return
-    }
+    }*/
     axios.get('/adv/list').then(res => {
         sessionStorage.setItem('advList', JSON.stringify(res))
         formatPrizeList(res)
@@ -118,21 +123,18 @@ function formatPrizeList (res) {
     console.log(prizeList.value);
 }
 
-// 根据中奖概率计算中奖的index
+// 根据中奖概率计算中奖的index(轮盘赌算法）
 function computePrizeIndex () {
-    let num = 0;
-    let obj = prizeList.value.reduce((prev,item,index) => {
-        let probNum = Math.round(item.probability* Math.random() * 1000)/100
-        console.log(probNum);
-        return probNum>prev.probNum? {
-            probNum,
-            index
-        }:prev
-    },{
-        probNum:0,
-        index:0
+    let random = Math.round(Math.random() * 100)/100
+    let prev = 0
+    prizeList.value.find((item,index, array) => {
+        prev += item.probability
+        if (prev > random || index === array.length-1) {
+            console.log(item);
+            prizeIndex.value = index;
+            return true
+        }
     })
-    console.log(obj);
 }
 
 

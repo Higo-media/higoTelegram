@@ -15,7 +15,7 @@ export default defineConfig({
         Components({
             resolvers: [
                 NutUIResolver({
-                    importStyle: false, // 关闭自动导入样式
+                    // importStyle: false, // 关闭自动导入样式
                 }),
             ],
         })

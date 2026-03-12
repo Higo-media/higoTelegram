@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { showToast } from '@nutui/nutui';
-
+import i18n from '@/i18n';
 const request = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL || '', // 建议通过环境变量管理
     timeout: 10000,
@@ -15,7 +15,12 @@ request.interceptors.request.use((config) => {
         config.headers['x-dev-bypass'] = 'true';
     }
 
-    // 2. Telegram 认证逻辑处理
+    // 2. 注入多语言标识 (关键修改)
+    // 从 vue-i18n 中获取当前激活的语言，并放入 accept-language Header
+    const currentLang = i18n.global.locale.value;
+    config.headers['accept-language'] = currentLang;
+
+    // 3. Telegram 认证逻辑处理
     let initData = (window as any)?.Telegram?.WebApp?.initData;
 
     if (initData && initData.includes('user')) {
