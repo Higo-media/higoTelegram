@@ -2,7 +2,7 @@ import axios from 'axios';
 import { showToast } from '@nutui/nutui';
 import i18n from '@/i18n';
 const request = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || '', // 建议通过环境变量管理
+    baseURL: '/api', // 建议通过环境变量管理
     timeout: 10000,
 });
 
