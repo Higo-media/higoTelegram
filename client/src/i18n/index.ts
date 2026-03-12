@@ -6,30 +6,41 @@ const messages = {
         btnText: {
             turn: 'Draw',
             mainBtn: 'Draw Now'
+        },
+        common: {
+            loading: 'loading'
         }
     },
     'zh-hans': {
         btnText: {
-            turn: '抽奖',
             mainBtn: '立即抽奖'
+        },
+        common: {
+            loading: '加载中'
         }
     },
-    'pt-br': { // 巴西葡萄牙语
+    'pt-br': {
         btnText: {
-            turn: 'Sortear',
             mainBtn: 'Sortear agora'
+        },
+        common: {
+            loading: 'Carregando'
         }
     },
-    'id': { // 印尼语
+    'id': {
         btnText: {
-            turn: 'Undian',
             mainBtn: 'Undian sekarang'
+        },
+        common: {
+            loading: 'Memuat'
         }
     },
-    'ur': { // 乌尔都语（巴基斯坦）
+    'ur': {
         btnText: {
-            turn: 'قرعہ اندازی',
             mainBtn: 'ابھی قرعہ اندازی کریں'
+        },
+        common: {
+            loading: 'لوڈ ہو رہا ہے'
         }
     }
 };

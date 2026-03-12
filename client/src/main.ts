@@ -6,6 +6,7 @@ import router from './router';
 import utils from "@/common/js/utils";
 import vConsole from "vconsole";
 import i18n from './i18n';
+// import "@nutui/nutui/dist/style.css";
 const app = createApp(App);
 
 app.use(createPinia());

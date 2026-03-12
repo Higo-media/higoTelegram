@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nutui/icons-vue": "^0.1.1",
     "@nutui/nutui": "^4.3.14",
     "@nutui/nutui-bingo": "^1.0.7",
     "axios": "^1.13.6",

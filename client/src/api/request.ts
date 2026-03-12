@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { showToast } from '@nutui/nutui';
 import i18n from '@/i18n';
+import { useLoadingStore } from '@/store/loading';
 const request = axios.create({
     baseURL: '/api', // 建议通过环境变量管理
     timeout: 10000,
@@ -8,6 +9,9 @@ const request = axios.create({
 
 // 请求拦截器
 request.interceptors.request.use((config) => {
+    // 开启全局 Loading
+    const loadingStore = useLoadingStore();
+    loadingStore.show();
     const isDev = import.meta.env.DEV;
 
     // 1. 本地开发绕过逻辑
@@ -39,6 +43,9 @@ request.interceptors.request.use((config) => {
 // 响应拦截器
 request.interceptors.response.use(
     (response) => {
+        // 关闭全局 Loading
+        const loadingStore = useLoadingStore();
+        loadingStore.hide();
         const res = response.data;
 
         // 对应后端返回格式：{ success: boolean, data: any, error?: string }
@@ -52,6 +59,9 @@ request.interceptors.response.use(
         }
     },
     (error) => {
+        // 关闭全局 Loading
+        const loadingStore = useLoadingStore();
+        loadingStore.hide();
         // 网络/系统级错误处理 (例如：404, 500, 网络断开)
         let message = '';
         const status = error.response?.status;
