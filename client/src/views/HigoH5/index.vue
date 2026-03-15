@@ -43,7 +43,7 @@ import axios from "@/api/request";
 import { showToast } from '@nutui/nutui';
 import LangSwitcher from '@/components/LangSwitcher.vue'
 import { useAnalytics } from '@/utils/analytics';
-const {trackAdClick, event} = useAnalytics()
+const {trackAdClick, drawResult, event} = useAnalytics()
 
 // 转盘大小
 const luckWidth = ref("78%");
@@ -89,13 +89,8 @@ const startTurns = (point) => {
 
 const endTurns = () => {
     const prizeInfo = prizeList.value[prizeIndex.value]
-    // trackAdClick(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
-    /*event('draw_result', {
-        ad_id: prizeInfo.id,
-        ad_title: prizeInfo.prizeName,
-        ad_link: prizeInfo.adLink,
-    });*/
-    event('ad_click');
+    trackAdClick(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
+    drawResult(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
     console.log(prizeInfo);
     showToast.text(`恭喜抽中${prizeInfo.prizeName}`);
 };

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import crypto from 'crypto';
 
+// telegram认证
 export const validateTelegramData = (req: Request, res: Response, next: NextFunction) => {
     // 【新增】本地开发绕过逻辑
     if (process.env.NODE_ENV === 'development' && req.headers['x-dev-bypass'] === 'true') {

@@ -24,9 +24,20 @@ export function useAnalytics() {
      */
     const trackAdClick = (adId: string, adTitle: string, adLink: string) => {
         event('ad_click', {
-            ad_id: adId,
-            ad_title: adTitle,
-            ad_link: adLink,
+            // ad_id: adId || "unknown_id",
+            ad_title: adTitle || "unknown_title",
+            ad_link: adLink || "no_link",
+        });
+    };
+
+    /**
+     * 追踪抽中奖品事件
+     */
+    const drawResult = (adId: string, adTitle: string, adLink: string) => {
+        event('draw_result', {
+            // ad_id: adId || "unknown_id",
+            ad_title: adTitle || "unknown_title",
+            ad_link: adLink || "no_link",
         });
     };
 
@@ -40,5 +51,5 @@ export function useAnalytics() {
         });
     };
 
-    return { initUser, trackAdClick, trackLangChange, event };
+    return { initUser, trackAdClick, trackLangChange, drawResult, event };
 }
