@@ -1,7 +1,5 @@
-// api/routes/auth.ts
 import { Router } from "express";
 import * as authController from "../controllers/adminAuthController";
-import {verifyAdmin} from "../middleware/adminAuth";
 
 const router = Router();
 
