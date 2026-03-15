@@ -9,7 +9,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-
+import { useAnalytics } from '@/utils/analytics';
+const { trackLangChange } = useAnalytics();
 const { locale, t } = useI18n();
 const showOptions = ref(false);
 
@@ -26,6 +27,7 @@ const currentLangName = computed(() =>
 );
 console.log(currentLangName);
 const onSelect = (item: any) => {
+    trackLangChange(locale.value, item.value)
     locale.value = item.value;
     // 可选：存入 localStorage 保证刷新后不丢失手动选择
     localStorage.setItem('user_lang', item.value);

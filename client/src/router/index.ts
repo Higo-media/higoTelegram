@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-
+import { trackRouter } from 'vue-gtag-next';
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
@@ -16,6 +16,8 @@ const router = createRouter({
     history: createWebHistory(), // 默认使用 HTML5 历史模式，配合 Vercel Rewrite 使用效果最佳
     routes
 });
+// 将 router 实例传递给 vue-gtag-next 开启自动追踪
+trackRouter(router);
 router.beforeEach((to, _from, next) => {
     // 当用户在路由跳转时，可以控制 Telegram 的主按钮显示与否
     const tg = (window as any).Telegram?.WebApp;
