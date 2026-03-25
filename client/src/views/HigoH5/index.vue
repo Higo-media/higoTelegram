@@ -105,20 +105,24 @@ function getAdvList() {
         return
     }*/
     axios.get('/adv/list').then(res => {
+        console.log(res);
         sessionStorage.setItem('advList', JSON.stringify(res))
         formatPrizeList(res)
     })
 }
 
 function formatPrizeList (res) {
-    console.log(res);
-    res.forEach((item,index) => {
+    console.log('res:',res);
+    // 过滤掉未启用的广告
+    const activeAds = res?.filter(item => item.is_active !== false) || [];
+    console.log('activeAds:',activeAds);
+    activeAds.forEach((item,index) => {
         prizeList.value[index] = {
             id: item.id,
             prizeName: item.name,
             adLink: item.link,
             probability: item.probability,
-            prizeImg: new URL(`./assets/images/prize${index+1}.png`, import.meta.url).href
+            prizeImg: item.imgLink || new URL(`./assets/images/prize${index+1}.png`, import.meta.url).href
         }
         if (index === 1) {
             prizeList.value[index].prizeColor = "rgb(251, 219, 216)"

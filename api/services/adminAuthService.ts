@@ -1,7 +1,7 @@
-import { supabase } from '../lib/supabase';
+import { supabase, supabaseAuth } from '../lib/supabase';
 
 export const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseAuth.auth.signInWithPassword({
         email,
         password
     });
@@ -24,7 +24,7 @@ export const signIn = async (email: string, password: string) => {
 };
 
 export const refreshToken = async (refreshToken: string) => {
-    const { data, error } = await supabase.auth.refreshSession({ refreshToken } as any);
+    const { data, error } = await supabaseAuth.auth.refreshSession({ refresh_token: refreshToken });
     if (error) return { success: false, message: error.message };
 
     return {

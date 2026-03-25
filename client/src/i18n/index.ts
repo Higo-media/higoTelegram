@@ -11,14 +11,14 @@ const messages = {
             loading: 'loading'
         }
     },
-    'zh-hans': {
+    /*'zh-hans': {
         btnText: {
             mainBtn: '立即抽奖'
         },
         common: {
             loading: '加载中'
         }
-    },
+    },*/
     'pt-br': {
         btnText: {
             mainBtn: 'Sortear agora'
@@ -55,7 +55,7 @@ const getBestLanguage = () => {
     const rawLang = ((window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.language_code || navigator.language).toLowerCase();
 
     // 2. 匹配逻辑
-    if (rawLang.startsWith('zh')) return 'zh-hans';
+    // if (rawLang.startsWith('zh')) return 'zh-hans';
     if (rawLang.startsWith('ru')) return 'ru';
     if (rawLang.startsWith('ja')) return 'ja';
 

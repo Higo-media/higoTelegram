@@ -74,7 +74,7 @@ request.interceptors.response.use(
             default: message = error.message || '网络连接异常';
         }
 
-        showToast.error(message);
+        showToast.fail(message);
         return Promise.reject(error);
     }
 );

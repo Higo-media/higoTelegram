@@ -4,7 +4,7 @@ import {asyncHandler} from "../lib/asyncHandler";
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
         const {username, password} = req.body;
-
+    console.log("login", username, password);
         // 调用 service 处理具体逻辑
         const result = await authService.signIn(username, password);
 

@@ -15,7 +15,7 @@ const { locale, t } = useI18n();
 const showOptions = ref(false);
 
 const menuItems = [
-    { name: '简体中文', value: 'zh-hans' },
+    /*{ name: '简体中文', value: 'zh-hans' },*/
     { name: 'English', value: 'en' },
     { name: 'Português (Brasil)', value: 'pt-br' }, // 巴西葡萄牙语
     { name: 'Bahasa Indonesia', value: 'id' },     // 印尼语
