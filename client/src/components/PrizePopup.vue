@@ -4,6 +4,8 @@
         position="center"
         :style="{ width: '85%', borderRadius: '20px', padding: '0' }"
         :close-on-click-overlay="false"
+        :overlay-style="{ background: 'rgba(0, 0, 0, 0.7)' }"
+        pop-class="prize-popup-wrapper"
     >
         <div class="prize-popup">
             <canvas ref="canvasRef" class="confetti-canvas"></canvas>
@@ -599,5 +601,11 @@ onUnmounted(() => {
     50%, 100% {
         left: 100%;
     }
+}
+</style>
+
+<style lang="scss">
+.prize-popup-wrapper {
+    background: transparent !important;
 }
 </style>
