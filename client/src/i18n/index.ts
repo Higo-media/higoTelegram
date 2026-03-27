@@ -7,6 +7,10 @@ const messages = {
             turn: 'Draw',
             mainBtn: 'Draw Now'
         },
+        popup: {
+            title: 'Congratulations!',
+            claim: 'Claim'
+        },
         common: {
             loading: 'loading'
         }
@@ -23,6 +27,10 @@ const messages = {
         btnText: {
             mainBtn: 'Sortear agora'
         },
+        popup: {
+            title: 'Parabéns!',
+            claim: 'Resgatar'
+        },
         common: {
             loading: 'Carregando'
         }
@@ -31,6 +39,10 @@ const messages = {
         btnText: {
             mainBtn: 'Undian sekarang'
         },
+        popup: {
+            title: 'Selamat!',
+            claim: 'Klaim'
+        },
         common: {
             loading: 'Memuat'
         }
@@ -38,6 +50,10 @@ const messages = {
     'ur': {
         btnText: {
             mainBtn: 'ابھی قرعہ اندازی کریں'
+        },
+        popup: {
+            title: 'مبارک ہے!',
+            claim: 'حاصل کریں'
         },
         common: {
             loading: 'لوڈ ہو رہا ہے'

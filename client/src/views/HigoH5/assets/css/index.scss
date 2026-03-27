@@ -1,8 +1,9 @@
 .container{
     width: 100%;
     min-height: 100%;
-    height: calc(2000 / 923 * 100vw);
-    background: url("../images/bg.png") no-repeat top/contain;
+    height: calc(1334 / 750 * 100vw);
+    background: #B71C1C url("../images/bg.png") no-repeat top/contain;
+    background-size: 100% 100%;
     .logo{
         margin: 10px 0 0 14px;
         width: 80px;
@@ -40,7 +41,7 @@
         }
     }
     .turntable-body{
-        margin: 50px auto 30px;
+        margin: 40px auto 25px;
         width: 8.5rem;
         height: 8.5rem;
         background: url("../images/bg-disk.png") no-repeat top/contain;

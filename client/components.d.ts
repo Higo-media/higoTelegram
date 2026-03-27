@@ -16,10 +16,13 @@ declare module 'vue' {
     LangSwitcher: typeof import('./src/components/LangSwitcher.vue')['default']
     NutAnimate: typeof import('@nutui/nutui')['Animate']
     NutButton: typeof import('@nutui/nutui')['Button']
+    NutIcon: typeof import('@nutui/nutui')['Icon']
     NutIndicator: typeof import('@nutui/nutui')['Indicator']
     NutLoading: typeof import('@nutui/nutui')['Loading']
     NutOverlay: typeof import('@nutui/nutui')['Overlay']
     NutPopover: typeof import('@nutui/nutui')['Popover']
+    NutPopup: typeof import('@nutui/nutui')['Popup']
+    PrizePopup: typeof import('./src/components/PrizePopup.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

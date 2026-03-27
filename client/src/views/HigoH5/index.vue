@@ -30,6 +30,13 @@
             {{$t('btnText.mainBtn')}}
             <img src="./assets/images/ic-hand.png" alt="" class="pointer">
         </div>
+
+        <PrizePopup
+            v-model="showPopup"
+            :prize-name="currentPrize.prizeName"
+            :prize-img="currentPrize.prizeImg"
+            :ad-link="currentPrize.adLink"
+        />
     </div>
 
 
@@ -42,6 +49,7 @@ import { ref, reactive } from "vue";
 import axios from "@/api/request";
 import { showToast } from '@nutui/nutui';
 import LangSwitcher from '@/components/LangSwitcher.vue'
+import PrizePopup from '@/components/PrizePopup.vue'
 import { useAnalytics } from '@/utils/analytics';
 const {trackAdClick, drawResult, event} = useAnalytics()
 
@@ -79,6 +87,8 @@ const styleOpt = reactive({
 // 中奖的奖品的index(此数据可根据后台返回的值重新赋值)
 const prizeIndex = ref(-1);
 const turntable = ref<any>(null);
+const showPopup = ref(false);
+const currentPrize = ref<any>({});
 
 // 点击抽奖
 const startTurns = (point) => {
@@ -91,8 +101,8 @@ const endTurns = () => {
     const prizeInfo = prizeList.value[prizeIndex.value]
     trackAdClick(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
     drawResult(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
-    console.log(prizeInfo);
-    showToast.text(`恭喜抽中${prizeInfo.prizeName}`);
+    currentPrize.value = prizeInfo
+    showPopup.value = true
 };
 
 onMounted(() => {
