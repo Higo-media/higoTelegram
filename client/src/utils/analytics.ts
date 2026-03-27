@@ -22,11 +22,20 @@ export function useAnalytics() {
     /**
      * 追踪广告点击事件
      */
-    const trackAdClick = (adId: string, adTitle: string, adLink: string) => {
-        event('ad_click', {
-            // ad_id: adId || "unknown_id",
-            ad_title: adTitle || "unknown_title",
-            ad_link: adLink || "no_link",
+    const trackAdClick = async (adId: string, adTitle: string, adLink: string) => {
+        return new Promise((resolve) => {
+            event('ad_click', {
+                ad_id: adId || "unknown_id",
+                ad_title: adTitle || "unknown_title",
+                ad_link: adLink || "no_link",
+                // 使用 event_callback 确保 GA 已经处理了该事件
+                event_callback: () => {
+                    resolve(true);
+                }
+            });
+
+            // 设置一个安全超时（例如 500ms），防止因为网络问题导致页面卡死不跳转
+            setTimeout(() => resolve(false), 500);
         });
     };
 

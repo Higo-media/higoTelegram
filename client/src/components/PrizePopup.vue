@@ -7,7 +7,7 @@
         :overlay-style="{ background: 'rgba(0, 0, 0, 0.7)' }"
         pop-class="prize-popup-wrapper"
     >
-        <div class="prize-popup">
+        <div class="prize-popup" :style="{ background: themeConfig.popupBg }">
             <canvas ref="canvasRef" class="confetti-canvas"></canvas>
             <div class="popup-close" @click="handleClose">
                 <IconFont name="close" size="20" />
@@ -43,16 +43,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+type ThemeType = 'default' | 'pt-br';
+
+interface ThemeConfig {
+    popupBg: string;
+}
+
+const themeConfigs: Record<ThemeType, ThemeConfig> = {
+    'default': {
+        popupBg: 'linear-gradient(135deg, #d32f2f 0%, #e53935 30%, #f44336 60%, #ff5252 100%)',
+    },
+    'pt-br': {
+        popupBg: 'linear-gradient(135deg, #006B3F 0%, #009739 30%, #00A651 60%, #00C853 100%)',
+    }
+};
 
 interface Props {
     modelValue: boolean;
     prizeName?: string;
     prizeImg?: string;
     adLink?: string;
+    theme?: string;
 }
 
 interface Emits {
@@ -66,6 +82,12 @@ const emit = defineEmits<Emits>();
 const visible = ref(props.modelValue);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 let animationId: number | null = null;
+
+// 计算当前主题配置
+const themeConfig = computed(() => {
+    const theme = (props.theme as ThemeType) || 'default';
+    return themeConfigs[theme] || themeConfigs['default'];
+});
 
 // 粒子系统
 class Particle {
@@ -218,11 +240,8 @@ const handleClose = () => {
 };
 
 const handleClaim = () => {
-    if (props.adLink) {
-        window.open(props.adLink, '_blank');
-    }
-    emit('claim');
     visible.value = false;
+    emit('claim');
 };
 
 onUnmounted(() => {

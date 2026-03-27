@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :style="{ background: `${themeConfig.bgColor} url('${themeConfig.bgImage}') no-repeat top/contain`, backgroundSize: '100% 100%' }">
         <img src="./assets/images/logo1.png" alt="" class="logo">
         <LangSwitcher @onSelect="getAdvList"></LangSwitcher>
         <div class="title">
@@ -36,22 +36,62 @@
             :prize-name="currentPrize.prizeName"
             :prize-img="currentPrize.prizeImg"
             :ad-link="currentPrize.adLink"
+            :theme="currentTheme"
+            @claim="claim"
         />
     </div>
 
 
 </template>
 <script setup lang="ts">
-import {onMounted} from "vue";
+import {onMounted, computed} from "vue";
 import { TurnTable } from "@nutui/nutui-bingo";
 import "@nutui/nutui-bingo/dist/style.css";
 import { ref, reactive } from "vue";
 import axios from "@/api/request";
 import { showToast } from '@nutui/nutui';
+import { useRoute } from 'vue-router';
 import LangSwitcher from '@/components/LangSwitcher.vue'
 import PrizePopup from '@/components/PrizePopup.vue'
 import { useAnalytics } from '@/utils/analytics';
 const {trackAdClick, drawResult, event} = useAnalytics()
+
+const route = useRoute();
+
+// 主题配置
+type ThemeType = 'default' | 'pt-br';
+
+interface ThemeConfig {
+    bgImage: string;
+    bgColor: string;
+    popupBg: string;
+    name: string;
+}
+
+const themeConfigs: Record<ThemeType, ThemeConfig> = {
+    'default': {
+        bgImage: new URL("./assets/images/bg.png", import.meta.url).href,
+        bgColor: '#B71C1C',
+        popupBg: 'linear-gradient(135deg, #d32f2f 0%, #e53935 30%, #f44336 60%, #ff5252 100%)',
+        name: 'default'
+    },
+    'pt-br': {
+        bgImage: new URL("./assets/images/bg-pt-br.png", import.meta.url).href,
+        bgColor: '#006B3F',
+        popupBg: 'linear-gradient(135deg, #006B3F 0%, #009739 30%, #00A651 60%, #00C853 100%)',
+        name: 'pt-br'
+    }
+};
+
+// 从 URL 参数获取主题
+const currentTheme = computed<ThemeType>(() => {
+    const theme = (route.query.theme as ThemeType) || 'default';
+    return theme in themeConfigs ? theme : 'default';
+});
+
+const themeConfig = computed(() => themeConfigs[currentTheme.value]);
+
+// 转盘大小
 
 // 转盘大小
 const luckWidth = ref("78%");
@@ -99,7 +139,6 @@ const startTurns = (point) => {
 
 const endTurns = () => {
     const prizeInfo = prizeList.value[prizeIndex.value]
-    trackAdClick(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
     drawResult(prizeInfo.id,prizeInfo.prizeName,prizeInfo.adLink)
     currentPrize.value = prizeInfo
     showPopup.value = true
@@ -108,6 +147,14 @@ const endTurns = () => {
 onMounted(() => {
     getAdvList()
 })
+
+async function claim() {
+    if (currentPrize.value.adLink) {
+        await trackAdClick(currentPrize.value.id,currentPrize.value.prizeName,currentPrize.value.adLink)
+        // window.open(props.adLink, '_blank');
+        location.href = currentPrize.value.adLink
+    }
+}
 
 function getAdvList() {
     /*if (sessionStorage.getItem('advList')) {
