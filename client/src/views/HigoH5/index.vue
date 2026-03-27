@@ -181,11 +181,13 @@ function formatPrizeList (res) {
             probability: item.probability,
             prizeImg: item.imgLink || new URL(`./assets/images/prize${index+1}.png`, import.meta.url).href
         }
-        if (index === 1) {
-            prizeList.value[index].prizeColor = "rgb(251, 219, 216)"
-        }
-        if (index === 3) {
-            prizeList.value[index].prizeColor = "rgba(246, 142, 46, 0.5)"
+        // 奇数和偶数使用不同的颜色
+        if (index % 2 === 0) {
+            // 偶数（淡薄荷绿）
+            prizeList.value[index].prizeColor = "rgb(255, 247, 223)"
+        } else {
+            // 奇数（淡薰衣草紫）
+            prizeList.value[index].prizeColor = "rgb(255, 231, 149)"
         }
     })
     console.log(prizeList.value);

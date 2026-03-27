@@ -4,7 +4,7 @@ import i18n from '@/i18n';
 import { useLoadingStore } from '@/store/loading';
 const request = axios.create({
     baseURL: '/api', // 建议通过环境变量管理
-    timeout: 10000,
+    timeout: 15000,
 });
 
 // 请求拦截器
