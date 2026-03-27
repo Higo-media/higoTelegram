@@ -6,16 +6,19 @@ import advRoutes from './routes/advertisement';
 import authRoutes from './routes/adminAuth';
 import { errorHandler } from './middleware/error';
 const app = express();
-app.use(cors());
+
+// CORS 必须在所有中间件之前配置
+app.use(cors({
+    origin: "https://higo-admin.vercel.app", // 你的管理后台地址
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.get('/api/test', (req, res) => res.send('Server is running'));
 app.use('/api', advRoutes);
 app.use("/api", authRoutes); // 这样访问路径就是 /api/login
-
-app.use(cors({
-    origin: "https://higo-admin.vercel.app", // 你的管理后台地址
-    credentials: true
-}));
 
 const PORT = 3000;
 app.listen(PORT, () => {
