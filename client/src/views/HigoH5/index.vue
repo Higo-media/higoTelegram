@@ -1,5 +1,5 @@
 <template>
-    <div class="container" :style="{ background: `${themeConfig.bgColor} url('${themeConfig.bgImage}') no-repeat top/contain`, backgroundSize: '100% 100%' }">
+    <div class="container" :class="currentTheme" :style="{ background: `${themeConfig.bgColor} url('${themeConfig.bgImage}') no-repeat top/contain`, backgroundSize: '100% 100%' }">
         <img src="./assets/images/logo1.png" alt="" class="logo">
         <LangSwitcher @onSelect="getAdvList"></LangSwitcher>
         <div class="title">
@@ -70,13 +70,13 @@ interface ThemeConfig {
 
 const themeConfigs: Record<ThemeType, ThemeConfig> = {
     'default': {
-        bgImage: new URL("./assets/images/bg.png", import.meta.url).href,
+        bgImage: new URL("./assets/images/bg-deep.png", import.meta.url).href,
         bgColor: '#B71C1C',
         popupBg: 'linear-gradient(135deg, #d32f2f 0%, #e53935 30%, #f44336 60%, #ff5252 100%)',
         name: 'default'
     },
     'pt-br': {
-        bgImage: new URL("./assets/images/bg-pt-br.png", import.meta.url).href,
+        bgImage: new URL("./assets/images/bg-pt-br-deep.png", import.meta.url).href,
         bgColor: '#006B3F',
         popupBg: 'linear-gradient(135deg, #006B3F 0%, #009739 30%, #00A651 60%, #00C853 100%)',
         name: 'pt-br'
@@ -94,8 +94,8 @@ const themeConfig = computed(() => themeConfigs[currentTheme.value]);
 // 转盘大小
 
 // 转盘大小
-const luckWidth = ref("78%");
-const luckheight = ref("78%");
+const luckWidth = ref("80%");
+const luckheight = ref("80%");
 // 转盘指针图片样式
 const pointerStyle = {
     width: "2rem",

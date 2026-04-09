@@ -120,3 +120,14 @@
     .container {
     }
 }
+
+/* pt-br 主题样式 */
+.container.pt-br {
+    .turntable-body {
+        background: url("../images/bg-disk-yellow.png") no-repeat top/contain;
+    }
+    .main-btn {
+        background: url("../images/btn-pop-yellow.png") no-repeat top/contain;
+        color: #9B7340  ;
+    }
+}
