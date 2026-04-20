@@ -7,8 +7,13 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/turntable',
-        name: 'Home',
+        name: 'turntable',
         component: () => import('../views/HigoH5/index.vue') // 记得在 src/views 文件夹下创建该文件
+    },
+    {
+        path: '/channelMiddle',
+        name: 'channelMiddle',
+        component: () => import('../views/channelMiddle/index.vue') // 记得在 src/views 文件夹下创建该文件
     },
 ];
 
