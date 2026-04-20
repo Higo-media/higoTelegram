@@ -7,7 +7,7 @@ const router = Router();
 
 // 客户端接口（Telegram 用户使用）
 // 如果在 index.ts 中挂载到了 /api/adv，那么这里的 '/' 实际上就是 /api/adv/
-router.get('/adv/list', validateTelegramData, advController.getAdvData);
+// router.get('/adv/list', validateTelegramData, advController.getAdvData);
 
 // 管理后台接口（需要 Admin 认证）
 router.get('/admin/list', verifyAdmin, advController.getAdvertisementList);
