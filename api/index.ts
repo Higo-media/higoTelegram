@@ -4,7 +4,6 @@ import express from 'express';
 import cors from 'cors';
 import advRoutes from './routes/advertisement';
 import authRoutes from './routes/adminAuth';
-import channelMiddle from './routes/channelMiddle';
 import { errorHandler } from './middleware/error';
 const app = express();
 
@@ -20,7 +19,6 @@ app.use(express.json());
 app.get('/api/test', (req, res) => res.send('Server is running'));
 app.use('/api', advRoutes);
 app.use("/api", authRoutes); // 这样访问路径就是 /api/login
-app.use("/api", channelMiddle);
 
 const PORT = 3000;
 app.listen(PORT, () => {
