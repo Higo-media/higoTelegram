@@ -16,7 +16,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.get('/api/test', (req, res) => res.send('Server is running'));
+// app.get('/api/test', (req, res) => res.send('Server is running'));
 app.use('/api', advRoutes);
 app.use("/api", authRoutes); // 这样访问路径就是 /api/login
 
