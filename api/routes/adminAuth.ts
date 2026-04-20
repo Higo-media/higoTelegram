@@ -9,5 +9,5 @@ router.post("/refresh-token", authController.handleRefreshToken);
 
 
 // 原channelMiddle.ts文件内容
-// router.get('/channelMiddle/postback', authController.handlePostback);
+router.get('/channelMiddle/postback', authController.handlePostback);
 export default router;

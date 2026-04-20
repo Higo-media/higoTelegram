@@ -15,7 +15,7 @@ router.get('/admin/:id', verifyAdmin, advController.getAdvertisementById);
 router.post('/admin/add', verifyAdmin, advController.createAdvertisement);
 router.put('/admin/:id', verifyAdmin, advController.updateAdvertisement);
 router.delete('/admin/:id', verifyAdmin, advController.deleteAdvertisement);
-router.delete('/admin/batch', verifyAdmin, advController.deleteAdvertisements);
+// router.delete('/admin/batch', verifyAdmin, advController.deleteAdvertisements);
 router.patch('/admin/:id/toggle', verifyAdmin, advController.toggleAdvertisementStatus);
 
 export default router;
